@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Acara TV</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Daftar Acara TV</h1>
+    <ul id="tv-show-list"></ul>
+
+    <script>
+        // Fungsi untuk mendapatkan daftar acara TV
+        const fetchTvShows = async () => {
+            try {
+                // Membuat permintaan GET ke TVMaze API untuk mendapatkan daftar acara TV
+                const response = await axios.get('https://api.tvmaze.com/shows');
+                const tvShows = response.data; // Menyimpan data respons dalam variabel
+
+                // Menampilkan daftar acara TV di halaman
+                const tvShowList = document.getElementById('tv-show-list');
+
+                tvShows.forEach(show => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${show.name} - ${show.genres.join(', ')}`;
+                    tvShowList.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error('Error fetching TV shows:', error);
+            }
+        };
+
+        // Memanggil fungsi untuk mendapatkan dan menampilkan daftar acara TV
+        fetchTvShows();
+    </script>
+</body>
+</html>
